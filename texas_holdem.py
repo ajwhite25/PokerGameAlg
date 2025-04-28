@@ -3,19 +3,28 @@ import math
 
 class TexasHoldEm:
     #money starts at 100 and resets and 
+    current_phase = ""
+    opponent_action=""
+    
     hand_ranking = []
     suits = []
     faces = []
     current_deal =[] # should not exceed 7! this is what we are examining and making comparisons in everything 
 
     def bet():
+<<<<<<< HEAD
         #all in never !  
+=======
+        #all in never !
+        # DO joanna
+>>>>>>> refs/remotes/origin/main
         pass
 
     def call_check():
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
+        # DO joanna
         pass
 
     def fold():
@@ -66,15 +75,22 @@ class TexasHoldEm:
      
 
 def main():
+    #continuous while and conditionals that check each of our class methods. following the rules
     print("Welcome to Texas Hold 'Em!")
     suite = input("Card Suite: ")
     faces = input("Faces: ")
+<<<<<<< HEAD
     amount = 100
+=======
+    current_phase = input("Enter current phase. ")
+    oppponent_action = input("What did the opponent do? ") #if they fold we automatically win.
+
+    #outputs--  tell them what action and by how much. 
+>>>>>>> refs/remotes/origin/main
 
     ## take phases as input with suite and number. 
 
 
-    #continuous while and conditionals that check each of our class methods. following the rules
     # reminder, call everytime until house puts call down
     # raise if and anytime we get two high cards
     #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
