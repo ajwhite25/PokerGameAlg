@@ -12,12 +12,8 @@ class TexasHoldEm:
     current_deal =[] # should not exceed 7! this is what we are examining and making comparisons in everything 
 
     def bet():
-<<<<<<< HEAD
-        #all in never !  
-=======
         #all in never !
         # DO joanna
->>>>>>> refs/remotes/origin/main
         pass
 
     def call_check():
@@ -38,7 +34,7 @@ class TexasHoldEm:
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
         rank = []
         for card in faces:
-            if card = True:
+            if card == True:
                 rank.append(card)
             #checks if face is high rank
             if rank in high_rank_cards:
@@ -79,14 +75,11 @@ def main():
     print("Welcome to Texas Hold 'Em!")
     suite = input("Card Suite: ")
     faces = input("Faces: ")
-<<<<<<< HEAD
     amount = 100
-=======
     current_phase = input("Enter current phase. ")
     oppponent_action = input("What did the opponent do? ") #if they fold we automatically win.
 
     #outputs--  tell them what action and by how much. 
->>>>>>> refs/remotes/origin/main
 
     ## take phases as input with suite and number. 
 
