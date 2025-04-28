@@ -12,8 +12,26 @@ class TexasHoldEm:
     current_deal =[] # should not exceed 7! this is what we are examining and making comparisons in everything 
 
     def bet():
+<<<<<<< HEAD
         #all in never !
         # DO joanna
+=======
+        #all in never !  
+        # get the betting phase from input
+        phase = get_betting_phases()
+
+        # if we are in the hole cards phase we just add the hole cards to our current_deal array
+        # and call 0 unless first better is not us then we match
+        if current_phase == "Hole Cards":
+            return call_check()
+
+        else if current_phase == "Flop":
+
+        else if current_phase == "Turn":
+
+
+        else: 
+>>>>>>> 75c36667bc65ca4947af5661c55ba926bcbcf82f
         pass
 
     def call_check():
