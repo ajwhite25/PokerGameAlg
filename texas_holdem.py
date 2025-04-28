@@ -9,14 +9,14 @@ class TexasHoldEm:
 
     def bet():
         #all in never !
-    
+        # DO joanna
         pass
 
     def call_check():
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
-        
+        # DO joanna
         pass
 
     def fold():
