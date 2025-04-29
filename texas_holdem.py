@@ -13,14 +13,9 @@ class TexasHoldEm:
 
     def bet(self):
         #all in never !  
-        # get the betting phase from input
-        phase = get_betting_phases()
+        
+        
 
-        # if we are in the hole cards phase we just add the hole cards to our current_deal array
-        # and call 0 unless first better is not us then we match
-        if current_phase == "Hole Cards":
-            # every first turn we will call something to be part of the game
-            return call_check()
 
         
         pass
