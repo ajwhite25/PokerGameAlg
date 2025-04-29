@@ -29,7 +29,7 @@ class TexasHoldEm:
         # get the betting phase from input
         # if we are in the hole cards phase we just add the hole cards to our current_deal array
         # and call 0 unless first better is not us then we match
-        print(f"Evaluating bet during {self.current_phase} phase...")
+        print(f"Evaluating bet ...")
 
         # key is number & value is symbol
         nums = list(current_deal.keys())
