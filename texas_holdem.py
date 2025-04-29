@@ -16,13 +16,16 @@ class TexasHoldEm:
         self.amount = 100
         self.pot = 0
 
+        # keeps track of moves
+        self.moves = 0
+
         # ordered in order of winning ranks
         self.hand_ranking = {'Royal Flush', 'Straight Flush', 'Four of a Kind', 'Full House', 'Flush', 'Straight', 'Three of a Kind', 'Two Pairs', 'Pair', 'High Card'}
         self.number = ['A', 'Q', 'K', 'J', '10', '9', '8','7','6','5','4','3','2','1']
         self.symbol = ['s', 'c','h','d']
 
     def bet(self):
-        #all in never !
+        #all in never!
         # get the betting phase from input
         # if we are in the hole cards phase we just add the hole cards to our current_deal array
         # and call 0 unless first better is not us then we match
@@ -30,28 +33,46 @@ class TexasHoldEm:
 
         # key is number & value is symbol
         nums = list(current_deal.keys())
+        high_cards = {"A", "K", "Q", "J", "10"}
 
-        if self.current_phase == "Turn":
-            if not pair_found:
+        # counts how many cards in our current deal
+        high_card_count = sum(1 for number in nums if number in high_cards)
+
+        # checks if there's a pair in current deal 
+        # set function picks out the duplicates in a list
+        pair_found = len(nums) != len(set(nums))
+
+        if self.current_phase == '1':
+            if self.moves == 0:
+                pot += self.raise_act()
+            else:
+                pot += self.call()
+
+        elif self.current_phase == '3':
+            if (not pair_found and high_card_count == 0):
                 self.fold()
             else:
-                self.call()
-        
-        
+                pot += self.call()
+        else:
+            pot += self.call()
+ 
 
     def call(self):
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
-        # DO joanna
         pass
+    
+    # helper function
+    def classify_rank(self):
+
 
     def fold(self):
         #never fold? unless 4th card down/ turn 
         #example: if in turn phase, and if no hand_ranking matched by now, FOLD
-        print("Fold. We Lose.")
+        print("Fold. Game Over.")
         exit()
-        pass
+
 
     def raise_act(self,faces, highest_bid, amount):
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
@@ -90,7 +111,7 @@ def main():
     start = input("Are you ready to begin the game?(y/n) ")
     
     if(start== 'n'):
-        print("Exiting Games")
+        print("Exiting Game")
         exit()
 
     if(start=='y'):
