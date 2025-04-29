@@ -1,54 +1,55 @@
-import random
+from collections import OrderedDict
 import math
+
+max_size = 7
+current_deal =OrderedDict(max_size=max_size)
+amount = 100
+pot=0
 
 class TexasHoldEm:
     #money starts at 100 and resets and 
-    current_phase = ""
-    opponent_action=""
-    
-    hand_ranking = []
-    suits = []
-    faces = []
-    current_deal =[] # should not exceed 7! this is what we are examining and making comparisons in everything 
+    # should not exceed 7! this is what we are examining and making comparisons in everything 
 
-    def bet():
-<<<<<<< HEAD
+    def __init__(self):
+        current_phase = ""
+        opponent_action=""
+        
+        hand_ranking = []
+        suite = []
+        faces = []
+
+    def bet(self):
         #all in never !
         # DO joanna
-=======
         #all in never !  
         # get the betting phase from input
-        phase = get_betting_phases()
-
         # if we are in the hole cards phase we just add the hole cards to our current_deal array
         # and call 0 unless first better is not us then we match
-        if current_phase == "Hole Cards":
-            return call_check()
+        # if current_phase == "Hole Cards":
+        #     return call_check()
 
-        else if current_phase == "Flop":
+        # elif current_phase == "Flop":
 
-        else if current_phase == "Turn":
+        # elif current_phase == "Turn":
 
-
-        else: 
->>>>>>> 75c36667bc65ca4947af5661c55ba926bcbcf82f
+        # else: 
         pass
 
-    def call_check():
+    def call_check(self):
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
         # DO joanna
         pass
 
-    def fold():
+    def fold(self):
         #never fold? unless 4th card down/ turn 
         #example: if in turn phase, and if no hand_ranking matched by now, FOLD
         print("Fold. We Lose.")
         exit()
         pass
 
-    def raise_act(faces, highest_bid, amount):
+    def raise_act(self,faces, highest_bid, amount):
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
         rank = []
         for card in faces:
@@ -57,15 +58,12 @@ class TexasHoldEm:
             #checks if face is high rank
             if rank in high_rank_cards:
                 #check if faces are the same
-                if :
                     #minimum raise
                     total_raise = highest_bid + 10
                     if (total_raise <= amount):
                         print("We Raise The Bet To", total_raise)
                     else:
                         print("Cant Raise. Not Enough Money")
-                else:
-                    print("Faces Are Not The Same")
             else:
                 print("Cards Are Not High Cards")
         #raise 10 only if 
@@ -73,16 +71,10 @@ class TexasHoldEm:
         #minimum, for first hand until house shows cards then rraise
         #raise if two pairs of high cards. so 9< ?
 
-        pass
+    def set_betting_phases(self, phase):
+        self.current_phase = phase
 
-    def get_betting_phases():
-         pass
-    def set_betting_phases():
-         pass
-    
-    def get_opponent_action():
-         pass
-    def set_opponent_action():
+    def set_opponent_action(self, action):
          pass
 
 #all in if suites match! can get flush (this is a hand ranking)
@@ -91,22 +83,63 @@ class TexasHoldEm:
 def main():
     #continuous while and conditionals that check each of our class methods. following the rules
     print("Welcome to Texas Hold 'Em!")
-    suite = input("Card Suite: ")
-    faces = input("Faces: ")
-    amount = 100
-    current_phase = input("Enter current phase. ")
-    oppponent_action = input("What did the opponent do? ") #if they fold we automatically win.
+    start = input("Are you ready to begin the game?(y/n) ")
+    
+    if(start== 'n'):
+        print("Exiting Games")
+        exit()
 
-    #outputs--  tell them what action and by how much. 
+    if(start=='y'):
+        print("Enter starting cards: ")
+        
+        for c in range (0,2):
+            number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ")
+            symbol = input(f"{c}: Symbol on card: (s,d,h,c) ")
+            current_deal[number] = symbol
 
-    ## take phases as input with suite and number. 
+        game = TexasHoldEm()
+        game.get_betting_phases = 1
+        turn= input("Who is going first? (i/u)")
 
+        while(1):
+            if(turn =='u'):
+                oppponent_action = input("What did the opponent do? ") 
+                game.set_opponent_action = oppponent_action
+                if(oppponent_action=='raised'):
+                     pot = int(input("How much? "))
+                #if they fold we automatically win.\
+                elif(oppponent_action =='fold'):
+                     print(f"I WIN!\n Money Remaining: {amount}. \n\n")
+                
+                game.call_check()
+                turn = 'i'
 
-    # reminder, call everytime until house puts call down
-    # raise if and anytime we get two high cards
-    #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
+            #do stuff
+            game.bet()
+            turn='u'
+            new_phase=input("Next Phase? (2,3,4) ")
+            match new_phase:
+                case '2':
+                      # The Flop
+                    game.get_betting_phases = 2
+                    for c in range (0,3):
+                        number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ")
+                        symbol = input(f"{c}: Symbol on card: (s,d,h,c) ")
+                        current_deal[number] = symbol
 
-    #array size does not exceed 7
+                case '3':
+                   current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
 
+                case '4':
+                    current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
+
+    
+            # reminder, call everytime until house puts card down
+            # raise if and anytime we get two high cards
+            #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
+
+            #array size does not exceed 7
+
+#outputs--  tell them what action and by how much. 
 if __name__ == "__main__":
-        main()
+            main()
