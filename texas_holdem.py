@@ -143,8 +143,8 @@ def main():
                     print(f"I WIN!\n Money Remaining: {amount}. \n\n")
                     exit()
                         
-                        # My game is taken next.
-                        turn = 'i'
+                    # My game is taken next.
+                    turn = 'i'
 
             elif(turn =='i') and not played[0]:
                 action = game.bet()
