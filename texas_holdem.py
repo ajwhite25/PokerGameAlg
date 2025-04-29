@@ -11,7 +11,7 @@ class TexasHoldEm:
     faces = []
     current_deal =[] # should not exceed 7! this is what we are examining and making comparisons in everything 
 
-    def bet():
+    def bet(self):
         #all in never !  
         # get the betting phase from input
         phase = get_betting_phases()
@@ -19,31 +19,27 @@ class TexasHoldEm:
         # if we are in the hole cards phase we just add the hole cards to our current_deal array
         # and call 0 unless first better is not us then we match
         if current_phase == "Hole Cards":
+            # every first turn we will call something to be part of the game
             return call_check()
 
-        else if current_phase == "Flop":
-
-        else if current_phase == "Turn":
-
-
-        else: 
+        
         pass
 
-    def call_check():
+    def call_check(self):
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
         # DO joanna
         pass
 
-    def fold():
+    def fold(self):
         #never fold? unless 4th card down/ turn 
         #example: if in turn phase, and if no hand_ranking matched by now, FOLD
         print("Fold. We Lose.")
         exit()
         pass
 
-    def raise_act(faces, highest_bid, amount):
+    def raise_act(self, faces, highest_bid, amount):
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
         rank = []
         for card in faces:
@@ -70,14 +66,14 @@ class TexasHoldEm:
 
         pass
 
-    def get_betting_phases():
+    def get_betting_phases(self):
          pass
-    def set_betting_phases():
+    def set_betting_phases(self):
          pass
     
-    def get_opponent_action():
+    def get_opponent_action(self):
          pass
-    def set_opponent_action():
+    def set_opponent_action(self):
          pass
 
 #all in if suites match! can get flush (this is a hand ranking)
