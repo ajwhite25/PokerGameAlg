@@ -166,19 +166,19 @@ def main():
                     current_deal[number] = symbol
                 break
                     
-                case '3':
-                    game.set_betting_phases(new_phase)
-                    # The Turn
-                    #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
-                    current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
-                    break
+            case '3':
+                game.set_betting_phases(new_phase)
+                # The Turn
+                #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
+                current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
+                break
 
-                case '4':
-                    game.set_betting_phases(new_phase)
-                    #The River
-                    #Closing!
-                    current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
-                    #outputs--  tell them what action and by how much. 
+            case '4':
+                game.set_betting_phases(new_phase)
+                #The River
+                #Closing!
+                current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
+                #outputs--  tell them what action and by how much. 
             
                 # reminder, call everytime until house puts card down
                 # raise if and anytime we get two high cards
