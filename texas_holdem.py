@@ -61,6 +61,7 @@ class TexasHoldEm:
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
+        # return the amount to call
         pass
     
     # helper function
