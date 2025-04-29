@@ -163,7 +163,6 @@ def main():
                     #Closing!
                     current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
                     #outputs--  tell them what action and by how much. 
-            turn= input("Who's turn? (i/u)")
         
             # reminder, call everytime until house puts card down
             # raise if and anytime we get two high cards
