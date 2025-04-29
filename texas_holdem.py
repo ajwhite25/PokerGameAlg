@@ -111,7 +111,7 @@ def main():
     start = input("Are you ready to begin the game?(y/n) ")
     
     if(start== 'n'):
-        print("Exiting Game")
+        print("Exiting Games")
         exit()
 
     if(start=='y'):
@@ -126,60 +126,61 @@ def main():
         game.get_betting_phases = 1
         turn= input("Who is going first? (i/u)")
 
-        while True:
-            # Played 0: i, PLayed 1: u
-            played = [False, False]
+    while True:
+    # Played 0: i, PLayed 1: u
+    played = [False, False]
 
-            while not (played[0], played[1]):
-                if(turn =='u') and not played[1]:
-                    oppponent_action = input("What did the opponent do? ") 
-                    game.set_opponent_action = oppponent_action
-                    played[1] = True
+        while not (played[0] and played[1]):
+            if(turn =='u') and not played[1]:
+                oppponent_action = input("What did the opponent do? ") 
+                game.set_opponent_action(oppponent_action)
+                played[1] = True
 
-                    if(oppponent_action=='raised'):
-                        pot = int(input("How much? "))
+                if(oppponent_action=='raised'):
+                    pot = int(input("How much? "))
                     #if they fold we automatically win.\
-                    elif(oppponent_action =='fold'):
-                        print(f"I WIN!\n Money Remaining: {amount}. \n\n")
-                        exit()
+                elif(oppponent_action =='fold'):
+                    print(f"I WIN!\n Money Remaining: {amount}. \n\n")
+                    exit()
+                        
+                        # My game is taken next.
+                        turn = 'i'
+
+            elif(turn =='i') and not played[0]:
+                action = game.bet()
+                print(action)
+                played[0]= True
+                turn='u'
+
+        new_phase=input("Next Phase? (2,3,4, 0-skip) ")
+
+        match new_phase:
+            case '0':
+                break
+            case '2':
+                # The Flop
+                game.set_betting_phases(new_phase)
+                for c in range (0,3):
+                    number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ")
+                    symbol = input(f"{c}: Symbol on card: (s,d,h,c) ")
+                    current_deal[number] = symbol
+                break
                     
-                    # My game is taken next.
-                    turn = 'i'
-
-                elif(turn =='i') and not played[0]:
-                    action = game.bet()
-                    print(action)
-                    played[0]= True
-                    turn='u'
-
-            new_phase=input("Next Phase? (2,3,4) ")
-
-            match new_phase:
-                case '2':
-                    # The Flop
-                    game.get_betting_phases = new_phase
-                    for c in range (0,3):
-                        number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ")
-                        symbol = input(f"{c}: Symbol on card: (s,d,h,c) ")
-                        current_deal[number] = symbol
-                    break
-                
                 case '3':
-                    game.get_betting_phases = new_phase
+                    game.set_betting_phases(new_phase)
                     # The Turn
                     #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
                     current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
                     break
 
                 case '4':
-                    game.get_betting_phases = new_phase
+                    game.set_betting_phases(new_phase)
                     #The River
                     #Closing!
                     current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
                     #outputs--  tell them what action and by how much. 
-            turn= input("Who is going first? (i/u)")
-        
-            # reminder, call everytime until house puts card down
-            # raise if and anytime we get two high cards
+            
+                # reminder, call everytime until house puts card down
+                # raise if and anytime we get two high cards
 if __name__ == "__main__":
     main()
