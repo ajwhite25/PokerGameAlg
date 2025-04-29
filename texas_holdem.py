@@ -18,12 +18,13 @@ class TexasHoldEm:
     # should not exceed 7! this is what we are examining and making comparisons in everything 
 
     def __init__(self):
-        current_phase = ""
-        opponent_action=""
+        self.current_phase = ""
+        self.opponent_action=""
         
-        hand_ranking = []
-        suite = []
-        faces = []
+        #Ordered in order of winning ranks!
+        self.hand_ranking = {'Royal Flush','Straight Flush', 'Four of a Kind', 'Full House', 'Flush', 'Straight', 'Three of a Kind', 'Two Pairs', 'Pair', 'High Card'}
+        self.number = ['A', 'Q', 'K', 'J', '10', '9', '8','7', '6', '5', '4', '3', '2', '1']
+        self.symbol = ['s','c','h','d']
 
     def bet(self):
         #all in never !
@@ -82,7 +83,8 @@ class TexasHoldEm:
         self.current_phase = phase
 
     def set_opponent_action(self, action):
-         pass
+        self.opponent_action = action
+         
 
 #all in if suites match! can get flush (this is a hand ranking)
      
@@ -115,7 +117,7 @@ def main():
             while not (played[0] and played[1]):
                 if(turn =='u') and not played[1]:
                     oppponent_action = input("What did the opponent do? ") 
-                    game.set_opponent_action = oppponent_action
+                    game.set_opponent_action(oppponent_action)
                     played[1] = True
 
                     if(oppponent_action=='raised'):
@@ -141,7 +143,7 @@ def main():
                     break
                 case '2':
                     # The Flop
-                    game.get_betting_phases = new_phase
+                    game.set_betting_phases(new_phase)
                     for c in range (0,3):
                         number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ")
                         symbol = input(f"{c}: Symbol on card: (s,d,h,c) ")
@@ -149,14 +151,14 @@ def main():
                     break
                 
                 case '3':
-                    game.get_betting_phases = new_phase
+                    game.set_betting_phases(new_phase)
                     # The Turn
                     #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
                     current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
                     break
 
                 case '4':
-                    game.get_betting_phases = new_phase
+                    game.set_betting_phases(new_phase)
                     #The River
                     #Closing!
                     current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
