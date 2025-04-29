@@ -8,7 +8,13 @@ pot=0
 
 class TexasHoldEm:
     #money starts at 100 and resets and 
-    # should not exceed 7! this is what we are examining and making comparisons in everything 
+    current_phase = ""
+    opponent_action=""
+    
+    hand_ranking = []
+    suite = []
+    faces = []
+    current_deal =[] # should not exceed 7! this is what we are examining and making comparisons in everything 
 
     def __init__(self):
         current_phase = ""
@@ -49,22 +55,39 @@ class TexasHoldEm:
         exit()
         pass
 
-    def raise_act(self,faces, highest_bid, amount):
+    def raise_act(self, highest_bid, amount):
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
+        #creates array to compare with high rank cards
         rank = []
         for card in faces:
             if card == True:
                 rank.append(card)
+        #rank duplicate counter
+        #source
+        #https://www.geeksforgeeks.org/find-duplicates-given-array-elements-not-limited-range/?ref=rp
+        def findDups(arr):
+            res = []
+            for i in range(len(arr) - 1):
+                for j in range(i + 1, len(arr)):
+                    if arr[i] == arr[j]:
+                        if arr[i] not in  res:
+                            res.append(arr[i])
+                        break
+            return res
             #checks if face is high rank
-            if rank in high_rank_cards:
+        if rank in high_rank_cards:
                 #check if faces are the same
-                    #minimum raise
-                    total_raise = highest_bid + 10
-                    if (total_raise <= amount):
-                        print("We Raise The Bet To", total_raise)
-                    else:
-                        print("Cant Raise. Not Enough Money")
+            common_elements = findDups(rank)
+            if common_elements in high_rank_cards:
+                #minimum raise
+                total_raise = highest_bid + 10
+                if (total_raise <= amount):
+                    print("We Raise The Bet To", total_raise)
+                else:
+                    print("Cant Raise. Not Enough Money")
             else:
+                    print("Faces Are Not The Same")
+        else:
                 print("Cards Are Not High Cards")
         #raise 10 only if 
         #raise anytime we have 2 of same faces (Q, K, A, J, 10)
