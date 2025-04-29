@@ -1,3 +1,10 @@
+""" 
+            Project: Texas Hold'Em Algorithm
+Team Members:                   Course: Intro To Algorithms S25
+    Amiya White                 
+    Jayla Henry                 
+    Joanna Lopez                 Date: April 29, 2025
+"""
 from collections import OrderedDict
 import math
 
