@@ -44,17 +44,17 @@ class TexasHoldEm:
 
         if self.current_phase == '1':
             if self.moves == 0:
-                pot += self.raise_act()
+                self.pot += self.raise_act()
             else:
-                pot += self.call()
+                self.pot += self.call()
 
         elif self.current_phase == '3':
             if (not pair_found and high_card_count == 0):
                 self.fold()
             else:
-                pot += self.call()
+                self.pot += self.call()
         else:
-            pot += self.call()
+            self.pot += self.call()
  
 
     def call(self):
