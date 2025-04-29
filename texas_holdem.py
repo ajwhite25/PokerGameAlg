@@ -128,7 +128,7 @@ def main():
 
     while True:
     # Played 0: i, PLayed 1: u
-    played = [False, False]
+        played = [False, False]
 
         while not (played[0] and played[1]):
             if(turn =='u') and not played[1]:
