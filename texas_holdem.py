@@ -13,14 +13,12 @@ class TexasHoldEm:
 
     def bet(self):
         #all in never !  
-        
-        
-
 
         
+
         pass
 
-    def call_check(self):
+    def call(self):
         #all operations will be called within call
         #call everytime until first 3 cards come out!
         # if low two pairs just call
@@ -32,7 +30,6 @@ class TexasHoldEm:
         #example: if in turn phase, and if no hand_ranking matched by now, FOLD
         print("Fold. We Lose.")
         exit()
-        pass
 
     def raise_act(self, faces, highest_bid, amount):
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
