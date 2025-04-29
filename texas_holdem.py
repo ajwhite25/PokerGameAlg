@@ -75,22 +75,16 @@ class TexasHoldEm:
 
 
     def raise_act(self,faces, highest_bid, amount):
+        #creates array to compare with high rank cards
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
-        rank = []
-        for card in faces:
-            if card == True:
-                rank.append(card)
-            #checks if face is high rank
-            if rank in high_rank_cards:
-                #check if faces are the same
-                    #minimum raise
-                total_raise = highest_bid + 10
-                if (total_raise <= amount):
-                    print("We Raise The Bet To", total_raise)
-                else:
-                    print("Cant Raise. Not Enough Money")
-            else:
-                print("Cards Are Not High Cards")
+        high_rank_count = sum(count for card, count in current_deal.items() if card in high_rank_cards)
+       
+        if high_rank_count == 2:
+            total_raise = pot + 10
+            if total_raise <= amount:
+                print("We Raise The Bet To", total_raise)
+                return total_raise
+                amount -= total_raise
         #raise 10 only if 
         #raise anytime we have 2 of same faces (Q, K, A, J, 10)
         #minimum, for first hand until house shows cards then rraise
@@ -139,6 +133,9 @@ def main():
                 if(oppponent_action=='raised'):
                     pot = int(input("How much? "))
                     #if they fold we automatically win.\
+                    action = game.bet()
+                    print(action)
+                    played[0]= True
                 elif(oppponent_action =='fold'):
                     print(f"I WIN!\n Money Remaining: {amount}. \n\n")
                     exit()
