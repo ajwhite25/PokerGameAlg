@@ -4,7 +4,6 @@ import math
 max_size = 7
 current_deal =OrderedDict(max_size=max_size)
 amount = 100
-pot=0
 
 class TexasHoldEm:
     #money starts at 100 and resets and 
@@ -13,8 +12,9 @@ class TexasHoldEm:
     def __init__(self):
         self.current_phase = ""
         self.opponent_action =""
+        self.opponent_bet = 0
         self.amount = 100
-        self.highest_bid = 0
+        self.pot = 0
 
         # keeps track of moves
         self.moves = 0
@@ -29,7 +29,7 @@ class TexasHoldEm:
         # get the betting phase from input
         # if we are in the hole cards phase we just add the hole cards to our current_deal array
         # and call 0 unless first better is not us then we match
-        print(f"Evaluating bet ...")
+        print(f"Evaluating bet during {self.current_phase} phase...")
 
         # key is number & value is symbol
         nums = list(current_deal.keys())
@@ -44,25 +44,35 @@ class TexasHoldEm:
 
         if self.current_phase == '1':
             if self.moves == 0:
-                self.highest_bid += self.raise_act(self, self.current_deal, self.highest_bid, self.amount)
+                self.pot += self.raise_act(self.current_deal, self.opponent_bet, self.amount)
             else:
-                self.highest_bid += self.call()
+                self.pot += self.call()
 
         elif self.current_phase == '3':
             if (not pair_found and high_card_count == 0):
                 self.fold()
             else:
-                self.highest_bid += self.call()
+                self.pot += self.call()
         else:
-            self.highest_bid += self.call()
+            self.pot += self.call()
  
 
     def call(self):
         #all operations will be called within call
         #call everytime until first 3 cards come out!
-        # if low two pairs just call
-        # return the amount to call
-        pass
+        # if we don't have enough to match we fold
+        if self.opponent_bet > self.amount:
+            print(f"Not enough to call. We fold.\n")
+            self.fold()
+        else:
+            # if we do have enough --> we subtract what they bet from our total to match
+            # and we add it to the pot
+            # print out our bet
+            self.amount -= self.opponent_bet
+            self.pot += self.opponent_bet
+            print(f"We call {opponent_bet}. \n Remaining Amount: {self.amount}.\n Pot is now {self.pot}.\n")
+            # since we are matching we just return what they bet
+            return opponent_bet
     
     # helper function
     def classify_rank(self):
@@ -75,17 +85,17 @@ class TexasHoldEm:
         exit()
 
 
-    def raise_act(self, current_deal, highest_bid, amount):
+    def raise_act(self, current_deal, opponent_bet, amount):
         #creates array to compare with high rank cards
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
         high_rank_count = sum(count for card, count in current_deal.items() if card in high_rank_cards)
        
-        if high_rank_count == 2:
-            total_raise = pot + 10
+        if high_rank_count >= 2:
+            total_raise = self.opponent_bet + 10
             if total_raise <= amount:
                 print("We Raise The Bet To", total_raise)
-                return total_raise
                 amount -= total_raise
+                return total_raise
         #raise 10 only if 
         #raise anytime we have 2 of same faces (Q, K, A, J, 10)
         #minimum, for first hand until house shows cards then rraise
@@ -93,6 +103,7 @@ class TexasHoldEm:
 
     def set_betting_phases(self, phase):
         self.current_phase = phase
+    
 
     def set_opponent_action(self, action):
         self.opponent_action = action
@@ -131,12 +142,13 @@ def main():
                 game.set_opponent_action(oppponent_action)
                 played[1] = True
 
-                if(oppponent_action=='raised'):
-                    pot = int(input("How much? "))
+                if(oppponent_action == 'raised'):
+                    game.opponent_bet = int(input("How much? "))
+                    game.pot += game.opponent_bet
                     #if they fold we automatically win.\
-                    action = game.bet()
-                    print(action)
                     played[0]= True
+                    return game.bet()
+
                 elif(oppponent_action =='fold'):
                     print(f"I WIN!\n Money Remaining: {amount}. \n\n")
                     exit()
