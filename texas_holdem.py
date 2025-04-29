@@ -14,7 +14,7 @@ class TexasHoldEm:
         self.current_phase = ""
         self.opponent_action =""
         self.amount = 100
-        self.pot = 0
+        self.highest_bid = 0
 
         # keeps track of moves
         self.moves = 0
@@ -44,17 +44,17 @@ class TexasHoldEm:
 
         if self.current_phase == '1':
             if self.moves == 0:
-                self.pot += self.raise_act()
+                self.highest_bid += self.raise_act(self, self.current_deal, self.highest_bid, self.amount)
             else:
-                self.pot += self.call()
+                self.highest_bid += self.call()
 
         elif self.current_phase == '3':
             if (not pair_found and high_card_count == 0):
                 self.fold()
             else:
-                self.pot += self.call()
+                self.highest_bid += self.call()
         else:
-            self.pot += self.call()
+            self.highest_bid += self.call()
  
 
     def call(self):
@@ -75,7 +75,7 @@ class TexasHoldEm:
         exit()
 
 
-    def raise_act(self,faces, highest_bid, amount):
+    def raise_act(self, current_deal, highest_bid, amount):
         #creates array to compare with high rank cards
         high_rank_cards = ["A", "K", "Q", "J", "10", "9"]
         high_rank_count = sum(count for card, count in current_deal.items() if card in high_rank_cards)
