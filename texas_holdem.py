@@ -105,7 +105,7 @@ def main():
             # Played 0: i, PLayed 1: u
             played = [False, False]
 
-            while not (played[0], played[1]):
+            while not (played[0] and played[1]):
                 if(turn =='u') and not played[1]:
                     oppponent_action = input("What did the opponent do? ") 
                     game.set_opponent_action = oppponent_action
@@ -127,9 +127,11 @@ def main():
                     played[0]= True
                     turn='u'
 
-            new_phase=input("Next Phase? (2,3,4) ")
+            new_phase=input("Next Phase? (2,3,4, 0-skip) ")
 
             match new_phase:
+                case '0':
+                    break
                 case '2':
                     # The Flop
                     game.get_betting_phases = new_phase
@@ -152,7 +154,7 @@ def main():
                     #Closing!
                     current_deal[input(f"{c}: Number on card: (A,Q,J,K,10-2) ")] = input(f"{c}: Symbol on card: (s,d,h,c) ")
                     #outputs--  tell them what action and by how much. 
-            turn= input("Who is going first? (i/u)")
+            turn= input("Who's turn? (i/u)")
         
             # reminder, call everytime until house puts card down
             # raise if and anytime we get two high cards
