@@ -84,11 +84,11 @@ class TexasHoldEm:
             if rank in high_rank_cards:
                 #check if faces are the same
                     #minimum raise
-                    total_raise = highest_bid + 10
-                    if (total_raise <= amount):
-                        print("We Raise The Bet To", total_raise)
-                    else:
-                        print("Cant Raise. Not Enough Money")
+                total_raise = highest_bid + 10
+                if (total_raise <= amount):
+                    print("We Raise The Bet To", total_raise)
+                else:
+                    print("Cant Raise. Not Enough Money")
             else:
                 print("Cards Are Not High Cards")
         #raise 10 only if 
