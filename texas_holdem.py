@@ -60,7 +60,7 @@ class TexasHoldEm:
                 # bet_amount = intself.raise_act(self.current_deal, self.opponent_bet, self.total)
                 # self.pot += bet_amount
                 self.raise_act(self.current_deal, self.opponent_bet)
-                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
+                #print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
             else:
                 self.pot += self.call()
 
@@ -69,7 +69,7 @@ class TexasHoldEm:
                 self.fold()
             elif pair_found and high_card_count > 0:
                 self.raise_act(self.current_deal, self.opponent_bet)
-                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
+                #print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
             else:
                 self.pot += self.call()
                 print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
@@ -119,7 +119,7 @@ class TexasHoldEm:
             if total_raise <= self.total:
                 self.total -= total_raise
                 self.pot += total_raise
-                print("We Raise The Bet To", total_raise)
+                print("We Raise The Bet BY", total_raise)
                 print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
                 return total_raise
 
@@ -129,7 +129,7 @@ class TexasHoldEm:
             if total_raise <= self.total:
                 self.total -= total_raise
                 self.pot += total_raise
-                print("We Raise The Bet To", total_raise)
+                print("We Raise The Bet BY", total_raise)
                 print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
                 return total_raise
 
@@ -145,7 +145,7 @@ class TexasHoldEm:
             total_bluff_raise += 5
             self.pot += total_bluff_raise
             self.total -= total_bluff_raise           
-        print("Raising The Bet To", total_bluff_raise)
+        #print("Raising The Bet To", total_bluff_raise)
         print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
         return total_bluff_raise
                 
@@ -257,6 +257,8 @@ def main():
                 symbol = input(f"{c}: Symbol on card: (s,d,h,c) ").lower()
                 #outputs--  tell them what action and by how much. 
                 game.current_deal.append((number, symbol))
+                print(game.current_deal)
+                print("We call zero! NO more money added as we finish")
                 print(f"GAME OVER! (you decide who wins) ;)")
                 state = False
 
