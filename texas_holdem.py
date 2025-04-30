@@ -5,13 +5,15 @@ Team Members:                   Course: Intro To Algorithms S25
     Jayla Henry                 
     Joanna Lopez                 Date: April 29, 2025
 """
+import random
+played = [False, False]
 
 class TexasHoldEm:
     #money starts at 100 and resets and 
     # should not exceed 7! this is what we are examining and making comparisons in everything 
 
     def __init__(self):
-        self.current_deal = ()
+        self.current_deal = []
         self.current_phase = ""
         self.opponent_action = ""
         self.opponent_bet = 0
@@ -41,7 +43,6 @@ class TexasHoldEm:
         # get the betting phase from input
         # if we are in the hole cards phase we just add the hole cards to our current_deal array
         # and call 0 unless first better is not us then we match
-        print(f"Evaluating bet during phase {self.get_betting_phases()} .....")
 
         # key is number & value is symbol
         nums = [card[0] for card in self.current_deal]
@@ -55,9 +56,11 @@ class TexasHoldEm:
         pair_found = len(nums) != len(set(nums))
 
         if self.current_phase == '1':
-            if self.moves == 0:
-                bet_amount = self.raise_act(current_deal, self.opponent_bet, self.amount)
-                self.pot += bet_amount
+            if (self.moves == 0 and not played[1]):
+                # bet_amount = intself.raise_act(self.current_deal, self.opponent_bet, self.total)
+                # self.pot += bet_amount
+                self.raise_act(self.current_deal, self.opponent_bet)
+                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
             else:
                 self.pot += self.call()
 
@@ -65,11 +68,14 @@ class TexasHoldEm:
             if (not pair_found and high_card_count == 0):
                 self.fold()
             elif pair_found and high_card_count > 0:
-                self.raise_act(self.current_deal, self.opponent_bet, self.total)
+                self.raise_act(self.current_deal, self.opponent_bet)
+                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
             else:
                 self.pot += self.call()
+                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
         else:
             self.pot += self.call()
+            
     
         # increment the moves after the player has acted
         self.moves += 1
@@ -102,19 +108,47 @@ class TexasHoldEm:
         exit()
 
 
-    def raise_act(self, current_deal, opponent_bet, amount):
+    def raise_act(self, current_deal, opponent_bet):
+        #creates array to compare with high rank cards
         #creates array to compare with high rank cards
         high_rank_cards = ["A", "K", "Q", "J", "10", "9", "8"]
         high_rank_count = sum(1 for card in current_deal if card in high_rank_cards)
-
-        if high_rank_count >= 2:
-            total_raise = self.opponent_bet + 10
-            if total_raise <= amount:
-                self.amount -= total_raise
+        #pair
+        if high_rank_count == 2:
+            total_raise = opponent_bet + 7
+            if total_raise <= self.total:
+                self.total -= total_raise
+                self.pot += total_raise
                 print("We Raise The Bet To", total_raise)
+                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
                 return total_raise
-        
-        return 0
+
+        #three of a kind & four of a kind
+        elif high_rank_count >= 3:
+            total_raise = opponent_bet + 10
+            if total_raise <= self.total:
+                self.total -= total_raise
+                self.pot += total_raise
+                print("We Raise The Bet To", total_raise)
+                print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
+                return total_raise
+
+        #bluff
+        bluff_probability = 0.1
+        total_bluff_raise = 0
+        if random.random() < bluff_probability:
+            total_bluff_raise = opponent_bet + 3
+            if total_bluff_raise <= self.total:
+                self.pot += total_bluff_raise
+                self.total -= total_bluff_raise
+        else:
+            total_bluff_raise += 5
+            self.pot += total_bluff_raise
+            self.total -= total_bluff_raise           
+        print("Raising The Bet To", total_bluff_raise)
+        print(f"Remaining Amount: {self.total}.\n Pot is now {self.pot}.\n")
+        return total_bluff_raise
+                
         #raise 10 only if 
         #raise anytime we have 2 of same faces (Q, K, A, J, 10)
         #minimum, for first hand until house shows cards then rraise
@@ -131,37 +165,6 @@ class TexasHoldEm:
 
 #all in if suites match! can get flush (this is a hand ranking)
 
-# def play_betting_round(game, turn):
-# # Played 0: i, PLayed 1: u
-#     played = [False, False]
-
-#     while not (played[0] and played[1]):
-#         if turn =='u' and not played[1]:
-#             oppponent_action = input("What did the opponent do? ") 
-#             game.set_opponent_action(oppponent_action)
-#             played[1] = True
-
-#             if oppponent_action == 'raised':
-#                 game.opponent_bet = int(input("How much? "))
-#                 game.pot += game.opponent_bet
-#                 #if they fold we automatically win.\
-#                 played[0]= True
-#                 game.bet()
-                    
-#             elif(oppponent_action =='fold'):
-#                 print(f"I WIN!\n Money Remaining: {game.amount}. \n\n")
-#                 exit()
-                        
-#             # My game is taken next.
-#             turn = 'i'
-
-#         elif turn =='i' and not played[0]:
-#             game.bet()
-#             played[0]= True
-#             turn = 'u'
-
-#     return turn
-
 def main():
     #continuous while and conditionals that check each of our class methods. following the rules
     print("Welcome to Texas Hold 'Em!")
@@ -171,49 +174,59 @@ def main():
         print("Exiting Game")
         exit()
 
-    if(start=='y'):
-        game = TexasHoldEm()
-        game.set_betting_phases('1')
-        print("Enter starting cards: ")
-        
-        for c in range (0,2):
-            number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ").upper()
-            symbol = input(f"{c}: Symbol on card: (s,d,h,c) ").lower()
-            game.current_deal((number, symbol))
+    
+    game = TexasHoldEm()
+    game.set_betting_phases('1')
+    print("Enter starting cards: ")
+    
+    for c in range (0,2):
+        number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ").upper()
+        symbol = input(f"{c}: Symbol on card: (s,d,h,c) ").lower()
+        game.current_deal.append((number, symbol))
 
-        turn = input("Who is going first? (i/u)").lower()
+    turn = input("Who is going first? (i/u)").lower()
     
     # initial betting round
     #turn = play_betting_round(game, turn)
 
     while (state):
         # Played 0: i, PLayed 1: u
-         played = [False, False]
 
         while not (played[0] and played[1]):
-            if(turn =='u') and not played[1]:
-                oppponent_action = input("What did the opponent do? ") 
-                game.set_opponent_action(oppponent_action)
+
+            if (turn == 'u' and not played[1]):
+                opponent_action = input("What did the opponent do? (fold, call, raise) ").lower()
+                game.set_opponent_action(opponent_action)
                 played[1] = True
 
-                if(oppponent_action=='raised'):
-                    pot = int(input("How much? "))
-                #if they fold we automatically win.\
-                elif(oppponent_action =='fold'):
-                    print(f"I WIN!\n Money Remaining: {amount}. \n\n")
+                if opponent_action == 'raise':
+                    game.opponent_bet = int(input("How much? "))
+                    game.pot += game.opponent_bet
+                    game.bet()
+                    if game.opponent_action == 'fold':
+                        return 'i'
+                elif opponent_action == 'fold':
+                    game.total += game.pot
+                    print(f"I WIN!\n Money Earned: {game.total}. \n\n")
                     exit()
-                    
-                # My game is taken next.
-                turn = 'i'
+                
+                elif opponent_action == 'call':
+                    game.opponent_bet = int(input("How much?"))
+                    game.pot += game.opponent_bet
+                    game.bet()
+                    turn = 'i'
 
-            elif(turn =='i') and not played[0]:
-                action = game.bet()
-                print(action)
+                turn = 'i'
+            
+
+            elif turn =='i' and not played[0]:
+                game.bet()
                 played[0]= True
                 turn='u'
 
-
-        new_phase = input("Next Phase? (2-Flop, 3-Turn, 4-River, 0-End) ").lower()
+        played[0]= False
+        played[1] = False
+        new_phase = input("Next Phase? (2-Flop, 3-Turn, 4-River, 0-Skips) ").lower()
 
         match new_phase:
             case '0':
@@ -226,14 +239,14 @@ def main():
                     number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ").upper()
                     symbol = input(f"{c}: Symbol on card: (s,d,h,c) ").lower()
                     game.current_deal.append((number, symbol))
-                   continue
+                continue
             case '3':
                 game.set_betting_phases(new_phase)
                 # The Turn
                 #fold on turn phase IF we don't see anything we can handle (in array in the phase class)
                 number = input(f"{c}: Number on card: (A,Q,J,K,10-2) ").upper()
                 symbol = input(f"{c}: Symbol on card: (s,d,h,c) ").lower()
-                game.current_deal((number, symbol))
+                game.current_deal.append((number, symbol))
                 continue
 
             case '4':
@@ -244,7 +257,9 @@ def main():
                 symbol = input(f"{c}: Symbol on card: (s,d,h,c) ").lower()
                 #outputs--  tell them what action and by how much. 
                 game.current_deal.append((number, symbol))
+                print(f"GAME OVER! (you decide who wins) ;)")
                 state = False
+
             
                 # reminder, call everytime until house puts card down
                 # raise if and anytime we get two high cards
